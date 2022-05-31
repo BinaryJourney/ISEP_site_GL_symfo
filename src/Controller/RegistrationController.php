@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ProfileUpdateFormType;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,8 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+                             EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -43,4 +45,48 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/profile/infos/edit/{id}", name="app_profile_register_edit")
+     */
+    public function edit(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher,
+                         EntityManagerInterface $entityManager): Response
+    {
+        $passwordHolder = $user->getPassword();
+        $user->setPassword("");
+        $form = $this->createForm(ProfileUpdateFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            /** @var User $user */
+            $user = $form->getData();
+            if(!$user->getPassword() == "")
+            {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+                $this->addFlash('success', "Mot de passe mis à jour avec succès! Let's go !");
+
+            } else {
+                $user->setPassword($passwordHolder);
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', "Informations personnelles mises à jour ! Vous êtes maintenant quelqu'un d'autre !");
+
+            // do anything else you need here, like send an email
+
+            return $this->redirectToRoute('app_profile_infos');
+        }
+
+        return $this->render('registration/edit.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
 }

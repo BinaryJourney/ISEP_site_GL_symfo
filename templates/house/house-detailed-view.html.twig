@@ -17,8 +17,7 @@
             <div>{{ house.keyTypeAccommodationCapacity.capacity }}</div>
             <div>{{ house.keyListeVilleFrance.name ~ '(' ~ house.keyListeVilleFrance.department ~ ')' }} </div>
             <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
-{#                TODO if house.user == actual user#}
-            <a class="btn btn-primary" href="{{ path('app_house_edit', {'id': house.id}) }}" >Edit</a>
+            <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}" >Réserver</a>
         </div>
 
     </div>

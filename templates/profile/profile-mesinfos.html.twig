@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="w-100 h-100 d-flex flex-column">
+
+        <h3 class="mx-auto my-3">Mes Informations</h3>
+
+        <div class="container m-auto w-75 p-3">
+            <div>{{ user.name }}</div>
+            <div>{{ user.surname }}</div>
+            <div>{{ user.keyTypeSex.sex }}</div>
+            <div>{{ user.email}}</div>
+            <div>{{ user.birthdate | date('d-m-Y')}}</div>
+
+            {% if user.phoneNumber %}
+                <div>{{ user.phoneNumber }}</div>
+            {% endif %}
+
+            <a class="btn btn-primary" href="{{ path('app_profile_register_edit', {'id': user.id}) }}">Edit</a>
+{#            <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}">Réserver</a>#}
+        </div>
+
+    </div>
+
+{% endblock %}

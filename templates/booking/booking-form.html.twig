@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style> .ui-autocomplete-loading {
+            background: white url("{{ asset('img/ajax-loader.gif') }}") left 5px center no-repeat !important;
+            background-size: 100px !important;
+        }</style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ville_autocomplete.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 d-flex flex-column">
+        <h3 class="mt-4 ms-4">House to rent</h3>
+        <div class="m-auto p-5 w-75">
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_label(form.date_begin) }}
+                {{ form_widget(form.date_begin) }}
+                {{ form_help(form.date_begin) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.date_end) }}
+                {{ form_widget(form.date_end) }}
+                {{ form_help(form.date_end) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

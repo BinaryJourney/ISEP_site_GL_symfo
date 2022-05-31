@@ -22,7 +22,7 @@ class ListeVilleFrance
     private $id;
 
     /**
-     * @Groups("main")
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -101,9 +101,17 @@ class ListeVilleFrance
         return $this;
     }
 
+    /**
+     * @Groups("main")
+     */
+    public function getNameAndDpt(): ?string
+    {
+        return $this->getName()." (".$this->getDepartment().")";
+    }
+
     public function __toString(): string
     {
-        return $this->getName() . "(" . $this->getDepartment() . ")";
+        return $this->getName() . " (" . $this->getDepartment() . ")";
     }
 
 }
