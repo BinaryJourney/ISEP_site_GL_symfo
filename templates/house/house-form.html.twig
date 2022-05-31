@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style> .ui-autocomplete-loading {
+            background: white url("{{ asset('img/ajax-loader.gif') }}") left 5px center no-repeat !important;
+            background-size: 100px !important;
+        }</style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ville_autocomplete.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 d-flex flex-column">
+        <h3 class="mt-4 ms-4">House to rent</h3>
+        <div class="m-auto p-5 w-75">
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+                {{ form_help(form.title) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+                {{ form_help(form.description) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.date_begin) }}
+                {{ form_widget(form.date_begin) }}
+                {{ form_help(form.date_begin) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.date_end) }}
+                {{ form_widget(form.date_end) }}
+                {{ form_help(form.date_end) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.key_type_accommodation_capacity) }}
+                {{ form_widget(form.key_type_accommodation_capacity) }}
+                {{ form_help(form.key_type_accommodation_capacity) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.key_liste_ville_france) }}
+
+                {% if form.vars.value.keyListeVilleFrance %}
+                    {{ form_widget(form.key_liste_ville_france, {'attr': {'value': form.vars.value.keyListeVilleFrance.name }}) }}
+                {% else %}
+                    {{ form_widget(form.key_liste_ville_france) }}
+                {% endif %}
+
+                {{ form_help(form.key_liste_ville_france) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.image_filename) }}
+                {{ form_widget(form.image_filename) }}
+                {{ form_help(form.image_filename) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
