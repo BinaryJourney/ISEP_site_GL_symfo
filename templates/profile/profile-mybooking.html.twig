@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="w-100 h-100 d-flex flex-column">
+
+        {% if user.keyBookingAsBooker %}
+            <h3 class="mx-auto my-3">Liste de mes reservations</h3>
+        {% else %}
+            <h3 class="mx-auto my-3">Aucune réservation prise</h3>
+        {% endif %}
+
+        {% for booking in user.keyBookingAsBooker %}
+            <div class="container m-auto w-75 p-3">
+                <div class="row">
+                    <a class="col" style="font-weight: bold" href="{{ path('app_house_detailed_view', {'id': booking.keyHouse.id}) }}">{{ booking.keyHouse.title }}</a>
+                    <div class="col">{{ booking.keyHouse.description }}</div>
+                    <div class="col">{{ booking.keyHouse.dateBegin | date('d-m-Y') }}</div>
+                    <div class="col">{{ booking.keyHouse.dateEnd | date('d-m-Y') }}</div>
+                    <div class="col">{{ booking.keyHouse.keyTypeAccommodationCapacity.capacity }}</div>
+                    <div class="col">{{ booking.keyHouse.keyListeVilleFrance.name ~ ' (' ~ booking.keyHouse.keyListeVilleFrance.department ~ ')' }} </div>
+                    <img class="col" src="{{ asset('uploads/images/' ~ booking.keyHouse.imageFilename) }}">
+                </div>
+                <div class="row ms-3">
+                    <div class="col">Reservation :</div>
+                    <div class="col">{{ booking.dateBegin | date('d-m-Y') }}</div>
+                    <div class="col">{{ booking.dateEnd | date('d-m-Y') }}</div>
+                    <div class="col">{{ booking.status.status }}</div>
+                </div>
+
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

@@ -39,6 +39,18 @@ class Booking
      */
     private $key_house_owner_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=House::class, inversedBy="key_bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $key_house;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeBookingStatus::class, inversedBy="key_bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +100,34 @@ class Booking
     public function setKeyHouseOwnerId(?User $key_house_owner_id): self
     {
         $this->key_house_owner_id = $key_house_owner_id;
+
+        return $this;
+    }
+
+    public function getKeyHouse(): ?House
+    {
+        return $this->key_house;
+    }
+
+    public function setKeyHouse(?House $key_house): self
+    {
+        $this->key_house = $key_house;
+
+        return $this;
+    }
+
+    public function toArray() {
+        return get_object_vars($this);
+    }
+
+    public function getStatus(): ?TypeBookingStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?TypeBookingStatus $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

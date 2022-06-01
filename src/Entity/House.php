@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HouseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -59,6 +61,16 @@ class House
      * @ORM\JoinColumn(nullable=false)
      */
     private $key_user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="key_house", orphanRemoval=true)
+     */
+    private $key_bookings;
+
+    public function __construct()
+    {
+        $this->key_bookings = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -157,6 +169,36 @@ class House
     public function setKeyUser(?User $key_user): self
     {
         $this->key_user = $key_user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getKeyBookings(): Collection
+    {
+        return $this->key_bookings;
+    }
+
+    public function addKeyBooking(Booking $keyBooking): self
+    {
+        if (!$this->key_bookings->contains($keyBooking)) {
+            $this->key_bookings[] = $keyBooking;
+            $keyBooking->setKeyHouse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKeyBooking(Booking $keyBooking): self
+    {
+        if ($this->key_bookings->removeElement($keyBooking)) {
+            // set the owning side to null (unless already changed)
+            if ($keyBooking->getKeyHouse() === $this) {
+                $keyBooking->setKeyHouse(null);
+            }
+        }
 
         return $this;
     }
