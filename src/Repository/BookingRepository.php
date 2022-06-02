@@ -39,6 +39,19 @@ class BookingRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllAcceptedBookingDates(): array {
+
+        return $this->createQueryBuilder('u')
+            ->select('u.date_begin')
+            ->addSelect('u.date_end')
+            ->leftJoin('u.key_house', 'house')
+            ->leftJoin('u.status', 'status')
+            ->where('status.status = :status')
+            ->setParameter('status', 'ACCEPTE')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Booking[] Returns an array of Booking objects
 //     */

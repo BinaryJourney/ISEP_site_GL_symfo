@@ -1,0 +1,12 @@
+.red-text {
+    color: red;
+}
+
+.focus-red-bckgrnd:focus {
+    background-color: red;
+}
+
+.focus-red-bckgrnd:focus > * {
+    color: white;
+}
+

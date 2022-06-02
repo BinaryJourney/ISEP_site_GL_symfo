@@ -20,3 +20,10 @@ global.$ = global.jQuery = $;
 import 'jquery-ui/ui/core';
 import 'jquery-ui/ui/widgets/autocomplete';
 import 'jquery-ui/themes/base/all.css';
+import 'flatpickr/dist/flatpickr.min';
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/l10n/fr';
+
+const moment = require('moment');
+
+global.moment = moment;

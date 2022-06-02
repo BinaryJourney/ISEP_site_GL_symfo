@@ -36,6 +36,7 @@
                     <div class="col">{{ booking.status.status }}</div>
                     <a id="accept-{{ booking.id }}" class="btn btn-primary accept-booking col">Accept</a>
                     <a id="refuse-{{ booking.id }}" class="btn btn-danger refuse-booking col">Refuse</a>
+                    <a class="btn btn-primary col" href="{{ path('app_messages', {'id': booking.keyBookerUserId.id}) }}" >Envoyer un message au demandeur</a>
                 </div>
                 {% endfor %}
             </div>

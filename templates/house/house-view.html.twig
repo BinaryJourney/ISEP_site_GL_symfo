@@ -26,6 +26,7 @@
                 <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
 {#                TODO if house.user == actual user#}
                 <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}" >Réserver</a>
+                <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}" >Envoyer un message au propriétaire</a>
             </div>
         {% endfor %}
 

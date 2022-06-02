@@ -20,6 +20,7 @@
                     <div class="col">{{ booking.keyHouse.keyTypeAccommodationCapacity.capacity }}</div>
                     <div class="col">{{ booking.keyHouse.keyListeVilleFrance.name ~ ' (' ~ booking.keyHouse.keyListeVilleFrance.department ~ ')' }} </div>
                     <img class="col" src="{{ asset('uploads/images/' ~ booking.keyHouse.imageFilename) }}">
+                    <a class="btn btn-primary col" href="{{ path('app_messages', {'id': booking.keyHouse.keyUser.id}) }}" >Envoyer un message au propriétaire</a>
                 </div>
                 <div class="row ms-3">
                     <div class="col">Reservation :</div>

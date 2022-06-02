@@ -10,25 +10,47 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/ville_autocomplete.js') }}"></script>
+        <script type="text/javascript">
+            function calendar_picker() {
+                $('.js-datepicker').flatpickr({
+                    dateFormat: "Y-m-d",
+                    altInput: true,
+                    mode: "range",
+                    minDate: "today",
+                    altFormat: "F j, Y",
+                    locale: 'fr',
+                    disable: [
+                        {% for bookedDate in bookedDates %}
+                        {
+                            from: "{{ bookedDate.date_begin|json_encode()|split(' ')[0]|split('"')[3] }}",
+                            to: "{{ bookedDate.date_end|json_encode()|split(' ')[0]|split('"')[3] }}"
+                        },
+                        {% endfor %}
+                    ],
+                    onOpen: function (selectedDates, dateStr, instance) {
+                        $(instance.altInput).prop('readonly', true);
+                    },
+                    onClose: function (selectedDates, dateStr, instance) {
+                        $(instance.altInput).prop('readonly', false);
+                        $(instance.altInput).blur();
+                    }
+                });
+            }
+            $(document).ready(calendar_picker);
+        </script>
 {% endblock %}
 
 {% block body %}
     <div class="w-100 h-100 d-flex flex-column">
         <h3 class="mt-4 ms-4">House to rent</h3>
+
         <div class="m-auto p-5 w-75">
             {{ form_start(form) }}
 
             <div class="mb-3">
-                {{ form_label(form.date_begin) }}
-                {{ form_widget(form.date_begin) }}
-                {{ form_help(form.date_begin) }}
-            </div>
-
-            <div class="mb-3">
-                {{ form_label(form.date_end) }}
-                {{ form_widget(form.date_end) }}
-                {{ form_help(form.date_end) }}
+                {{ form_label(form.calendar) }}
+                {{ form_widget(form.calendar, { 'attr': { 'placeholder': 'Veuillez selectionner une date' }}) }}
+                {{ form_help(form.calendar) }}
             </div>
 
             {{ form_end(form) }}

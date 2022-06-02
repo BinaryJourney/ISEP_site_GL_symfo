@@ -1,0 +1,12 @@
+easy_admin:
+    site_name: 'RefugiHome'
+    entities:
+#        # List the entity class name you want to manage
+        - App\Entity\User
+        - App\Entity\House
+        - App\Entity\Booking
+        - App\Entity\Message
+        - App\Entity\TypeAccommodationCapacity
+        - App\Entity\TypeBookingStatus
+        - App\Entity\TypeSex
+        - App\Entity\ListeVilleFrance
