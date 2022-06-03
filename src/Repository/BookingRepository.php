@@ -52,6 +52,20 @@ class BookingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllOversteppingBookings(Booking $acceptedBooking): array {
+
+        return $this->createQueryBuilder('u')
+            ->where('u.date_begin >= :date_begin')
+            ->andWhere('u.date_end <= :date_end')
+            ->andWhere('u.id != :id')
+            ->setParameter('date_begin', $acceptedBooking->getDateBegin()->format('Y-m-d'))
+            ->setParameter('date_end', $acceptedBooking->getDateEnd()->format('Y-m-d'))
+            ->setParameter('id', $acceptedBooking->getId())
+            ->getQuery()
+            ->getResult();
+
+    }
+
 //    /**
 //     * @return Booking[] Returns an array of Booking objects
 //     */

@@ -24,7 +24,8 @@ class VilleFranceTransformer implements DataTransformerInterface
             return;
         }
 
-        $value = explode(" ", $value)[0];
+        $value = explode(" (", $value)[0];
+
         $listeVille = $this->listeVilleFranceRepository->findOneBy(['name' => $value]);
 
         if(!$listeVille) {

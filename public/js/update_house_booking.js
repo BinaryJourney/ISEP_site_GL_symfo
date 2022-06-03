@@ -24,4 +24,16 @@ $(document).ready(function () {
         })
     })
 
+    $('.cancel-booking').on('click', function () {
+        let id = $(this).attr('id').split('-')[1];
+
+        $.ajax({
+            type: "POST",
+            data: {id},
+            url: "http://localhost:8000/booking/cancel"
+        }).done(function () {
+            location.reload();
+        })
+    })
+
 })

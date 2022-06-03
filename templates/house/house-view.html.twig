@@ -1,10 +1,5 @@
 {% extends "base.html.twig" %}
 
-{% block javascripts %}
-    {{ parent() }}
-
-{% endblock %}
-
 {% block body %}
 
     <div class="w-100 h-100 d-flex flex-column">
@@ -15,18 +10,36 @@
             <h3 class="mx-auto my-3">Aucune maison disponible</h3>
         {% endif %}
 
+
+        {{ form_start(form) }}
+        <div class="d-flex" style="flex-direction: row">
+            <div class="form-group">
+                {{ form_label(form.key_type_accommodation_capacity) }}
+                {{ form_widget(form.key_type_accommodation_capacity) }}
+                {{ form_help(form.key_type_accommodation_capacity) }}
+            </div>
+            <div class="form-group mt-auto ms-3 h-50">
+                {{ form_widget(form.Rechercher) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+
+
         {% for house in houses %}
             <div class="container m-auto w-75 p-3">
-                <a style="font-weight: bold" href="{{ path('app_house_detailed_view', {'id': house.id}) }}">{{ house.title }}</a>
+                <a style="font-weight: bold"
+                   href="{{ path('app_house_detailed_view', {'id': house.id}) }}">{{ house.title }}</a>
                 <div>{{ house.description }}</div>
                 <div>{{ house.dateBegin | date('d-m-Y') }}</div>
                 <div>{{ house.dateEnd | date('d-m-Y') }}</div>
                 <div>{{ house.keyTypeAccommodationCapacity.capacity }}</div>
                 <div>{{ house.keyListeVilleFrance.name ~ ' (' ~ house.keyListeVilleFrance.department ~ ')' }} </div>
                 <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
-{#                TODO if house.user == actual user#}
-                <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}" >Réserver</a>
-                <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}" >Envoyer un message au propriétaire</a>
+                {#                TODO if house.user == actual user #}
+                <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}">Réserver</a>
+                <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}">Envoyer un
+                    message au propriétaire</a>
             </div>
         {% endfor %}
 

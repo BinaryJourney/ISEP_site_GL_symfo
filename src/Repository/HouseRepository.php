@@ -39,6 +39,27 @@ class HouseRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllStillAvailableHouses():array {
+
+        return $this->createQueryBuilder('u')
+            ->where('NOT u.date_end <= :today')
+            ->setParameter('today', date('Y-m-d'))
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllStillAvailableHousesWithAccommodation(string $capacity):array {
+
+        return $this->createQueryBuilder('u')
+            ->where('NOT u.date_end <= :today')
+            ->setParameter('today', date('Y-m-d'))
+            ->leftJoin('u.key_type_accommodation_capacity', 'capacity')
+            ->andWhere('capacity.capacity = :capacity')
+            ->setParameter('capacity', $capacity)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return House[] Returns an array of House objects
 //     */

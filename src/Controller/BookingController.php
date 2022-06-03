@@ -46,7 +46,7 @@ class BookingController extends AbstractController
             $loggedInUser = $this->getUser();
             $booking->setKeyBookerUserId($loggedInUser);
             /** @var House $house */
-            $house = $houseRepository->findOneBy(array('id' => $id));
+            $house = $houseRepository->find($id);
             $booking->setKeyHouseOwnerId($house->getKeyUser());
             $booking->setKeyHouse($house);
             $status = $statusRepository->findOneBy(array('status' => 'EN ATTENTE'));
@@ -80,12 +80,22 @@ class BookingController extends AbstractController
             $id = $request->request->get('id');
             /** @var Booking $booking */
             $booking = $bookingRepository->find($id);
-            $status = $statusRepository->findOneBy(array('status' => 'ACCEPTE'));
-            $booking->setStatus($status);
+
+            $statusAccepted = $statusRepository->findOneBy(array('status' => 'ACCEPTE'));
+            $statusNonAccepted = $statusRepository->findOneBy(array('status' => 'NON-ACCEPTE'));
+            $booking->setStatus($statusAccepted);
 
             $em->persist($booking);
+
+            /** Drop all other IN WAITING booking with concurent dates */
+            $oversteppingBookings = $bookingRepository->findAllOversteppingBookings($booking);
+            /** @var Booking $oversteppingBooking */
+            foreach ($oversteppingBookings as &$oversteppingBooking) {
+                $oversteppingBooking->setStatus($statusNonAccepted);
+                $em->persist($oversteppingBooking);
+            }
+
             $em->flush();
-            //TODO
 
             return $this->json("ok", 200);
         } catch (Exception $exception) {
@@ -105,6 +115,29 @@ class BookingController extends AbstractController
             /** @var Booking $booking */
             $booking = $bookingRepository->find($id);
             $status = $statusRepository->findOneBy(array('status' => 'NON-ACCEPTE'));
+            $booking->setStatus($status);
+
+            $em->persist($booking);
+            $em->flush();
+
+            return $this->json("ok", 200);
+        } catch (Exception $exception) {
+            return $this->json($exception->getMessage(), 400);
+        }
+    }
+
+    /**
+     * @Route("/booking/cancel", name="app_booking_cancel")
+     */
+    public function cancel(Request $request, ManagerRegistry $doctrine,
+                           BookingRepository $bookingRepository, TypeBookingStatusRepository $statusRepository)
+    {
+        try {
+            $em = $doctrine->getManager();
+            $id = $request->request->get('id');
+            /** @var Booking $booking */
+            $booking = $bookingRepository->find($id);
+            $status = $statusRepository->findOneBy(array('status' => 'ANNULE'));
             $booking->setStatus($status);
 
             $em->persist($booking);

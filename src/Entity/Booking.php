@@ -131,4 +131,12 @@ class Booking
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getKeyHouse()->getTitle() . '-' . $this->getDateBegin()->format('d/m/Y') .
+            '-' . $this->getDateEnd()->format('d/m/Y') . '-' . $this->getStatus()->getStatus();
+    }
+
+
 }

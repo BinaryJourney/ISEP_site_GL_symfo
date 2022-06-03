@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\House;
 use App\Entity\News;
+use App\Entity\TypeAccommodationCapacity;
 use App\Form\HouseFormType;
 use App\Form\NewsForm;
+use App\Form\SearchHouseFormType;
 use App\Repository\ListeVilleFranceRepository;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -94,9 +98,20 @@ class HouseController extends AbstractController
         );
         $house->setKeyListeVilleFrance(ClassUtils::getRealClass($house->getKeyListeVilleFrance()));
 
+        $oldBeginDate = $house->getDateBegin();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if($oldBeginDate != $form->get('date_begin')->getData())
+            {
+                $this->addFlash('error', 'Vous ne pouvez pas changer la date de début de proposition de votre maison !');
+                return $this->renderForm('house/house-form.html.twig', [
+                    'form' => $form,
+                ]);
+            }
+
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('image_filename')->getData();
 
@@ -144,14 +159,27 @@ class HouseController extends AbstractController
     /**
      * @Route("/house/view", name="app_house_view")
      */
-    public function viewAll(ManagerRegistry $doctrine) {
+    public function viewAll(ManagerRegistry $doctrine, Request $request) {
 
         $em = $doctrine->getManager();
-        $houses = $em->getRepository(House::class)
-            ->findAll();
 
-        return $this->render('house/house-view.html.twig', [
-            'houses' => $houses
+        /** @var House $house */
+        $house = new House();
+        $form = $this->createForm(SearchHouseFormType::class, $house);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $capacity = $form->get('key_type_accommodation_capacity')->getData();
+            $houses = $em->getRepository(House::class)
+                ->findAllStillAvailableHousesWithAccommodation($capacity);
+        } else {
+            $houses = $em->getRepository(House::class)
+                ->findAllStillAvailableHouses();
+        }
+
+        return $this->renderForm('house/house-view.html.twig', [
+            'form' => $form,
+            'houses' => $houses,
         ]);
     }
 
