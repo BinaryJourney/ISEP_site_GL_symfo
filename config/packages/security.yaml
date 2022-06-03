@@ -38,6 +38,7 @@ security:
         - { path: '^/profile', roles: ROLE_USER }
         - { path: '^/house', roles: ROLE_USER }
         - { path: '^/booking', roles: ROLE_USER }
+        - { path: '^/messages', roles: ROLE_USER }
 
 when@test:
     security:

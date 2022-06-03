@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/update_house_booking.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="w-100 h-100 d-flex flex-column">
+
+        {% if threads|length != 0 %}
+            <h3 class="mx-auto my-3">Liste de mes discussions</h3>
+        {% else %}
+            <h3 class="mx-auto my-3">Aucune discussion</h3>
+        {% endif %}
+
+        <div class="container m-auto w-75 p-3">
+            {% for thread in threads %}
+            <div class="row mb-2">
+                <div class="col">{{ thread['other_user'].name ~ ' ' ~ thread['other_user'].surname }}</div>
+                <div class="col">{{ thread['timestamp']|date('d/m/Y H:i') }}</div>
+                <div class="col">{{ thread['content']|length > 25 ? thread['content']|slice(0, 25) ~ '...' : thread['content'] }}</div>
+                <a class="btn btn-primary col" href="{{ path('app_messages', {'id': thread['other_user'].id}) }}">Continuer la discussion</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

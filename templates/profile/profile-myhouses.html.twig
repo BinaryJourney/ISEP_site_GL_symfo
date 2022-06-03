@@ -15,7 +15,7 @@
             <h3 class="mx-auto my-3">Aucune maison rentrée</h3>
         {% endif %}
 
-        {% for house in user.keyHouses %}
+        {% for house in user.keyHouses.count != 0 %}
             <div class="container m-auto w-75 p-3">
                 <div class="row">
                     <a class="col" style="font-weight: bold"

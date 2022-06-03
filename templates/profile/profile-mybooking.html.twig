@@ -9,7 +9,7 @@
 
     <div class="w-100 h-100 d-flex flex-column">
 
-        {% if user.keyBookingAsBooker %}
+        {% if user.keyBookingAsBooker.count != 0 %}
             <h3 class="mx-auto my-3">Liste de mes reservations</h3>
         {% else %}
             <h3 class="mx-auto my-3">Aucune réservation prise</h3>

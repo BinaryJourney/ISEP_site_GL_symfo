@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -48,6 +49,29 @@ class MessageRepository extends ServiceEntityRepository
             ->setParameter('uid2', $uid2)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function findAllThreadsOfUser(int $uid): array
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT main.* FROM message main LEFT JOIN message earlier
+                        ON earlier.timestamp > main.timestamp AND
+                        (
+                            earlier.key_receiver_id = main.key_receiver_id AND earlier.key_sender_id = main.key_sender_id OR
+                            earlier.key_receiver_id = main.key_sender_id AND earlier.key_sender_id = main.key_receiver_id
+                        )
+                WHERE (main.key_receiver_id = :id OR main.key_sender_id = :id) AND earlier.id IS NULL
+                ORDER BY main.timestamp DESC';
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['id' => $uid]);
+
+        return $result->fetchAllAssociative();
     }
 
 //    /**
