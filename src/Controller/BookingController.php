@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Entity\House;
+use App\Entity\TypeBookingStatus;
 use App\Entity\User;
 use App\Form\BookingFormType;
 use App\Repository\BookingRepository;
@@ -27,6 +28,31 @@ class BookingController extends AbstractController
                         HouseRepository $houseRepository, TypeBookingStatusRepository $statusRepository,
                         BookingRepository $bookingRepository)
     {
+        /** @var House $house */
+        $house = $houseRepository->find($id);
+        /** @var User $user */
+        $user = $this->getUser();
+        /** @var TypeBookingStatus $status */
+        $status = $statusRepository->findOneBy(array('status' => 'EN ATTENTE'));
+
+        $checkIfAlreadyBooked = $bookingRepository->findOneBy(array(
+            'key_house' => $house,
+            'key_booker_user_id' => $user,
+            'status' => $status)
+        );
+        if($checkIfAlreadyBooked) {
+            $this->addFlash('error', 'Vous ne pouvez pas reserver à nouveau 
+            la même maison quand vous avez déjà une reservation en attente !');
+
+            return $this->redirectToRoute('app_index');
+        }
+
+        if($user->getId() == $house->getKeyUser()->getId())
+        {
+            $this->addFlash('error', 'Vous ne pouvez pas réserver votre propre maison !');
+            return $this->redirectToRoute('app_index');
+        }
+
         $booking = new Booking();
         $form = $this->createForm(BookingFormType::class, $booking);
         $form->handleRequest($request);
@@ -45,11 +71,8 @@ class BookingController extends AbstractController
             /** @var User $loggedInUser */
             $loggedInUser = $this->getUser();
             $booking->setKeyBookerUserId($loggedInUser);
-            /** @var House $house */
-            $house = $houseRepository->find($id);
             $booking->setKeyHouseOwnerId($house->getKeyUser());
             $booking->setKeyHouse($house);
-            $status = $statusRepository->findOneBy(array('status' => 'EN ATTENTE'));
             $booking->setStatus($status);
 
             $entityManager = $doctrine->getManager();

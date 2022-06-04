@@ -9,13 +9,13 @@
 
     <div class="w-100 h-100 d-flex flex-column">
 
-        {% if user.keyHouses %}
+        {% if user.keyHouses.count != 0 %}
             <h3 class="mx-auto my-3">Liste de mes maisons</h3>
         {% else %}
             <h3 class="mx-auto my-3">Aucune maison rentrée</h3>
         {% endif %}
 
-        {% for house in user.keyHouses.count != 0 %}
+        {% for house in user.keyHouses %}
             <div class="container m-auto w-75 p-3">
                 <div class="row">
                     <a class="col" style="font-weight: bold"

@@ -3,17 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\House;
-use App\Entity\News;
-use App\Entity\TypeAccommodationCapacity;
 use App\Form\HouseFormType;
-use App\Form\NewsForm;
 use App\Form\SearchHouseFormType;
 use App\Repository\ListeVilleFranceRepository;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

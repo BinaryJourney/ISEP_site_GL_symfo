@@ -36,10 +36,11 @@
                 <div>{{ house.keyTypeAccommodationCapacity.capacity }}</div>
                 <div>{{ house.keyListeVilleFrance.name ~ ' (' ~ house.keyListeVilleFrance.department ~ ')' }} </div>
                 <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
-                {#                TODO if house.user == actual user #}
-                <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}">Réserver</a>
-                <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}">Envoyer un
-                    message au propriétaire</a>
+                {% if app.user.id != house.keyUser.id %}
+                    <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}">Réserver</a>
+                    <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}">
+                        Envoyer un message au propriétaire</a>
+                {% endif %}
             </div>
         {% endfor %}
 
