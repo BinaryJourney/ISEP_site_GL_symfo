@@ -46,7 +46,7 @@ class HouseFormType extends AbstractType
                     ])
                 ],
             ])
-            ->add('save', SubmitType::class)
+            ->add('Poster', SubmitType::class)
         ;
     }
 

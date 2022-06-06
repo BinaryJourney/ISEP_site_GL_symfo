@@ -13,8 +13,31 @@ class IndexController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('index.html.twig', [
-            'controller_name' => 'IndexController',
-        ]);
+        return $this->render('index.html.twig', []);
     }
+
+    /**
+     * @Route("/about", name="app_about")
+     */
+    public function about(): Response
+    {
+        return $this->render('other/about.twig', []);
+    }
+
+    /**
+     * @Route("/cgs", name="app_cgs")
+     */
+    public function CGS(): Response
+    {
+        return $this->render('other/cgs.twig', []);
+    }
+
+    /**
+     * @Route("/contact", name="app_contact")
+     */
+    public function contact(): Response
+    {
+        return $this->render('other/contact.twig', []);
+    }
+
 }

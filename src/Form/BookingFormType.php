@@ -21,7 +21,7 @@ class BookingFormType extends AbstractType
                     'class' => 'js-datepicker'
                 ]
             ])
-            ->add('save', SubmitType::class)
+            ->add('Poster', SubmitType::class)
         ;
     }
 

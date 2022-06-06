@@ -7,21 +7,102 @@
 
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column">
+    <div class="w-100 d-flex flex-column bg-white" style="min-height: 100%">
 
-        <div class="container m-auto w-75 p-3">
-            <div style="font-weight: bold">{{ house.title }}</div>
-            <div>{{ house.description }}</div>
-            <div>{{ house.dateBegin | date('d-m-Y') }}</div>
-            <div>{{ house.dateEnd | date('d-m-Y') }}</div>
-            <div>{{ house.keyTypeAccommodationCapacity.capacity }}</div>
-            <div>{{ house.keyListeVilleFrance.name ~ '(' ~ house.keyListeVilleFrance.department ~ ')' }} </div>
-            <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
-            {% if app.user.id != house.keyUser.id %}
-                <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}">Réserver</a>
-                <a class="btn btn-primary" href="{{ path('app_messages', {'id': house.keyUser.id}) }}">
-                    Envoyer un message au propriétaire</a>
-            {% endif %}
+        <div class="card-body" style="flex: 0">
+            <h5 class="card-title text-center text-uppercase">Details du logement</h5>
+        </div>
+
+        <div class="list-group mt-4">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <!-- List group-->
+                    <ul class="list-group shadow mt-2">
+                        <!-- list group item-->
+                        <li class="list-group-item">
+                            <!-- Custom content-->
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body order-2 order-lg-1">
+                                    <h4 class="mt-0 font-weight-bold mb-4">{{ house.title }}</h4>
+                                    <p class="font-italic text-muted my-0 small text-truncate">
+                                        {{ house.description }}
+                                    </p>
+
+                                    <div class="d-flex align-items-center mt-4">
+                                        <i class="bi bi-stars"></i>
+                                        <p>&nbsp;</p>
+                                        <p class="font-weight-bold my-0">Ville : </p>
+                                    </div>
+                                    <div class="container">
+                                        <p class="font-italic my-0 small text-truncate">
+                                            {{ house.keyListeVilleFrance.name ~ ' (' ~ house.keyListeVilleFrance.department ~ ')' }}
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mt-4">
+                                        <i class="bi bi-stars"></i>
+                                        <p>&nbsp;</p>
+                                        <p class="font-weight-bold my-0">Capacité : </p>
+                                    </div>
+                                    <div class="container">
+                                        <p class="font-italic my-0 small text-truncate">
+                                            {{ house.keyTypeAccommodationCapacity.capacity }}
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mt-4">
+                                        <i class="bi bi-calendar-week-fill"></i>
+                                        <p>&nbsp;</p>
+                                        <p class="font-weight-bold my-0">Dates de disponibilité : </p>
+                                    </div>
+                                    <div class="container">
+                                        <p class="font-italic my-0 small">
+                                            Du {{ house.dateBegin | date('d-m-Y') }}
+                                            au {{ house.dateEnd | date('d-m-Y') }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center mt-4">
+                                    <i class="bi bi-images"></i>
+                                    <p>&nbsp;</p>
+                                    <p class="font-weight-bold my-0">Photos du logement : </p>
+                                </div>
+                                <div id="carouselExampleControls" class="carousel carousel-dark slide"
+                                     data-bs-ride="carousel" data-bs-interval="2500">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}"
+                                                 class="d-block w-100"
+                                                 alt="{{ house.imageFilename }}">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+                                <div class="my-3 text-center">
+                                    <a class="btn btn-primary" href="{{ path('app_booking_new', {'id': house.id}) }}" role="button">Réserver</a>
+                                    <a class="btn btn-primary"
+                                       href="{{ path('app_messages', {'id': house.keyUser.id}) }}" role="button">Envoyer
+                                        un message à l'annonceur</a>
+                                </div>
+                            </div>
+                            <!-- End -->
+                        </li>
+                        <!-- End -->
+                    </ul>
+                    <!-- End -->
+                </div>
+            </div>
         </div>
 
     </div>

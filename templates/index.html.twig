@@ -7,9 +7,18 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('/js/test_jquery.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
-    <h1>Hello World</h1>
+    <div class="cover-container d-flex w-50 p-3 mx-auto flex-column">
+
+        <main role="main" class="text-center bg-white p-3 mt-5" style="border-radius: 0.5rem">
+            <h1 class="cover-heading">Bienvenue sur Trouv'logement</h1>
+            <p class="lead">Nous allons vous mettre en relation avec des personnes prête à vous héberger temporairement.</p>
+            <p class="lead">
+                <a href="{{ path('app_house_view') }}" class="btn btn-lg btn-secondary">Voir les hébergements</a>
+            </p>
+        </main>
+
+    </div>
 {% endblock %}
