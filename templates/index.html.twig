@@ -1,14 +1,5 @@
 {% extends "base.html.twig" %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
-
 {% block body %}
     <div class="cover-container d-flex w-50 p-3 mx-auto flex-column">
 
@@ -16,7 +7,7 @@
             <h1 class="cover-heading">Bienvenue sur Trouv'logement</h1>
             <p class="lead">Nous allons vous mettre en relation avec des personnes prête à vous héberger temporairement.</p>
             <p class="lead">
-                <a href="{{ path('app_house_view') }}" class="btn btn-lg btn-secondary">Voir les hébergements</a>
+                <a href="{{ path('app_house_view') }}" class="btn btn-lg btn-secondary vermeil">Voir les hébergements</a>
             </p>
         </main>
 

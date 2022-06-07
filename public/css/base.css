@@ -1,0 +1,9 @@
+.vermeil {
+    background: linear-gradient(to right, #ff0101, #d06f33);
+    border: none;
+}
+
+.vermeil:hover {
+    background: linear-gradient(to left, #ff0101, #d06f33);
+    border: none;
+}

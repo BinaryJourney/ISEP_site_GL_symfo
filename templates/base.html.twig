@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link href="{{ asset('css/header.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link href="{{ asset('css/base.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/header.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ asset('img/logo-trouvbnb.png') }}">
+    {% endblock %}
 
-        {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" style="margin-bottom: 0 !important;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" style="margin-bottom: 0 !important;">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success" style="margin-bottom: 0 !important;">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('error') %}
-            <div class="alert alert-danger" style="margin-bottom: 0 !important;">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        {% block header %}
-           {#  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 60px">
+    {% block header %}
+        {#  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 60px">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ path('app_index') }}">Trouv'logement</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,54 +76,65 @@
                 </div>
             </nav> #}
 
-            <div class="header">
-                <div class="nav-bar">
-                    <div class="brand">
-                        <a href="home.html">
-                            <h1>TROUV'HÉBERGEMENT</h1>
-                        </a>
-                    </div>
-                    <div class="nav-list">
+        <div class="header">
+            <div class="nav-bar">
+                <div class="brand">
+                    <a href="{{ path('app_index') }}">
+                        <h1>TROUV'BNB</h1>
+                    </a>
+                </div>
+                <div class="nav-list">
 
-                        <a href="home.html">Accueil</a>
-                        <a href="availablehouses.html">Maisons disponibles</a>
-                        <a href="proposehosting.html">Proposer un hébergement</a>
+                    <a class="{{ app.request.get('_route') == 'app_index' ? 'active' }}" href="{{ path('app_index') }}">Accueil</a>
+                    <a class="{{ app.request.get('_route') == 'app_house_view' ? 'active' }}"
+                       href="{{ path('app_house_view') }}">Maisons disponibles</a>
+                    <a class="{{ app.request.get('_route') == 'app_house_new' ? 'active' }}"
+                       href="{{ path('app_house_new') }}">Proposer un hébergement</a>
 
-                    </div>
-                    <div class="menu">
-                        <li>Profil
-                            <ul>
-                                <li><a href="profil_info.html" >Mes infos</a></li>
-                                <li><a href="listhouses.html" >Mes Maisons</a></li>
-                                <li><a href="reservations.html" >Mes réservations</a></li>
-                                <li><a href="chat.html" >Messagerie</a></li>
-                                <li><a href="home.html" >Déconnexion</a></li>
-                            </ul>
+                </div>
+                <div class="menu">
+                    <li>Profil
+                        <ul>
+                            {% if app.user %}
+                            <li><a href="{{ path('app_profile_infos') }}">Mes infos</a></li>
+                            <li><a href="{{ path('app_profile_house') }}">Mes Maisons</a></li>
+                            <li><a href="{{ path('app_profile_booking') }}">Mes réservations</a></li>
+                            <li><a href="{{ path('app_profile_discussions') }}">Messagerie</a></li>
+                            <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('easyadmin') }}">ADMIN</a></li>
+                            {% endif %}
+                            {% else %}
+                                <li><a href="{{ path('app_login') }}">Se Connecter</a></li>
+                            {% endif %}
+                        </ul>
 
-                        </li>
+                    </li>
 
-                    </div>
                 </div>
             </div>
-        {% endblock %}
-    </head>
-    <body style="background: linear-gradient(to right, #ff0101,#d06f33);">
-        {% block body %}
-        {% endblock %}
-        {% block footer %}
-            <div class="footer-basic">
-                <footer>
-                    <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-                    <ul class="footer_content">
-                        <li class="home"><a href="home.html">Accueil</a></li>
-                        <li class="aboutus"><a href="aboutus.html">Qui sommes nous ? </a></li>
-                        <li class="privacypolicy"><a href="privacypolicy.html">Politique de confidentialité</a></li>
-                        <li class="contact"><a href="contact.html">Contactez-nous<a></li>
+        </div>
+    {% endblock %}
+</head>
+<body style="background: linear-gradient(to right, #ff0101,#d06f33);">
+{% block body %}
+{% endblock %}
+{% block footer %}
+    <div class="footer-basic">
+        <footer>
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i
+                            class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a
+                        href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <ul class="footer_content">
+                <li class="home"><a href="{{ path('app_index') }}">Accueil</a></li>
+                <li class="aboutus"><a href="{{ path('app_about') }}">Qui sommes nous ? </a></li>
+                <li class="privacypolicy"><a href="{{ path('app_cgs') }}">Politique de confidentialité</a></li>
+                <li class="contact"><a href="{{ path('app_contact') }}">Contactez-nous</a></li>
 
-                    </ul>
-                    <p class="copyright">Trouv'hébergement © 2022</p>
-                </footer>
-            </div>
-        {% endblock %}
-    </body>
+            </ul>
+            <p class="copyright">Trouv'hébergement © 2022</p>
+        </footer>
+    </div>
+{% endblock %}
+</body>
 </html>
