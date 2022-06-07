@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.header {
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(to right, #ff0101, #d06f33);
+    transition: 0.3s ease background-color;
+    font-family: "Roboto", sans-serif;
+    border-bottom: solid;
+    border-color: white;
+}
+.brand h1 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: white;
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}
+.header .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.header .nav-list a:hover, .active {
+    color: white !important;
+}
+
+
+
+.header .nav-list a {
+    font-size: 15px;
+    text-transform: uppercase;
+    padding-left: 13px;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.header .menu {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #ccc;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.header .menu ul {
+    list-style-type: none;
+    display: none;
+    position: absolute;
+    background-color: #e9a766;
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+}
+.header .menu li {
+    position: relative;
+    width: 140px;
+    padding: 0px;
+    margin: 0px;
+}
+.header .menu ul a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    line-height: 30px;
+    border-bottom: 1px solid white;
+    padding: 10px;
+}
+.header .menu li:hover ul {
+    display: block;
+}
+.header .menu li ul li {
+    min-width: 165px;
+}
+
+.header .menu ul li:hover a {
+    background-color: #ff0101;
+}
