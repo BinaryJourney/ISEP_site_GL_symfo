@@ -1,0 +1,12 @@
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (1, '1 Personne');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (2, '2 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (3, '3 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (4, '4 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (5, '5 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (6, '6 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (7, '7 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (8, '8 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (9, '9 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (10, '10 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (11, '11 Personnes');
+INSERT INTO public.type_accommodation_capacity (id, capacity) VALUES (12, '12 Personnes');
