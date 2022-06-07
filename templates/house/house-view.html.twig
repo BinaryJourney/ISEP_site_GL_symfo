@@ -34,26 +34,30 @@
             {{ form_end(form) }}
 
             {% for house in houses %}
-            <div class="container">
-                <div class="image_house">
-                    <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
+                <div class="container">
+                    <div class="image_house">
+                        <img src="{{ asset('uploads/images/' ~ house.imageFilename) }}">
+                    </div>
+                    <div class="info_house">
+                        <h2>{{ house.title }}</h2>
+                        <p>{{ house.description|default('') }}</p>
+                        <p>De : {{ house.dateBegin | date('d-m-Y') }}</p>
+                        <p>A : {{ house.dateEnd | date('d-m-Y') }}</p>
+                        <p>Capacite : {{ house.keyTypeAccommodationCapacity.capacity }}</p>
+                        <p>Ville
+                            : {{ house.keyListeVilleFrance.name ~ ' (' ~ house.keyListeVilleFrance.department ~ ')' }}</p>
+                        <a class="btn btn-primary vermeil"
+                           href="{{ path('app_house_detailed_view', {'id': house.id}) }}"
+                           role="button">Détails de l'annonce</a>
+                        {% if app.user.id != house.keyUser.id %}
+                            <a class="btn btn-primary vermeil" href="{{ path('app_booking_new', {'id': house.id}) }}"
+                               role="button">Réserver</a>
+                            <a class="btn btn-primary vermeil"
+                               href="{{ path('app_messages', {'id': house.keyUser.id}) }}"
+                               role="button">Envoyer un message à l'annonceur</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="info_house">
-                    <h2>{{ house.title }}</h2>
-                    <p>{{ house.description|default('') }}</p>
-                    <p>De : {{ house.dateBegin | date('d-m-Y') }}</p>
-                    <p>A : {{ house.dateEnd | date('d-m-Y') }}</p>
-                    <p>Capacite : {{ house.keyTypeAccommodationCapacity.capacity }}</p>
-                    <p>Ville : {{ house.keyListeVilleFrance.name ~ ' (' ~ house.keyListeVilleFrance.department ~ ')' }}</p>
-                    <a class="btn btn-primary vermeil" href="{{ path('app_house_detailed_view', {'id': house.id}) }}"
-                       role="button">Détails de l'annonce</a>
-                    {% if app.user.id != house.keyUser.id %}
-                        <a class="btn btn-primary vermeil" href="{{ path('app_booking_new', {'id': house.id}) }}" role="button">Réserver</a>
-                        <a class="btn btn-primary vermeil" href="{{ path('app_messages', {'id': house.keyUser.id}) }}"
-                           role="button">Envoyer un message à l'annonceur</a>
-                    {% endif %}
-                </div>
-            </div>
             {% endfor %}
         </div>
     </div>

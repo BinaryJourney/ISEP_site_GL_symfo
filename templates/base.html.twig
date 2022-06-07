@@ -31,51 +31,6 @@
     {% endfor %}
 
     {% block header %}
-        {#  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 60px">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ path('app_index') }}">Trouv'logement</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
-                            <li class="nav-item">
-                                <a class="nav-link {{ app.request.get('_route') == 'app_index' ? 'active' }}" aria-current="page" href="{{ path('app_index') }}">Accueil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ app.request.get('_route') == 'app_house_view' ? 'active' }}" href="{{ path('app_house_view') }}">Maisons disponibles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ app.request.get('_route') == 'app_house_new' ? 'active' }}" href="{{ path('app_house_new') }}">Proposer un hébergement</a>
-                            </li>
-                            <li class="nav-item dropdown ms-auto">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Profil
-                                </a>
-                                {% if app.user %}
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{ path('app_profile_infos') }}">Mes Infos</a></li>
-                                    <li><a class="dropdown-item" href="{{ path('app_profile_house')}}">Mes Maisons</a></li>
-                                    <li><a class="dropdown-item" href="{{ path('app_profile_booking')}}">Mes Reservations</a></li>
-                                    <li><a class="dropdown-item" href="{{ path('app_profile_discussions')}}">Mes Fils de Discussion</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Deconnexion</a></li>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item focus-red-bckgrnd" href="{{ path('easyadmin') }}" target="_blank"><span class="red-text">Admin</span></a></li>
-                                    {% endif %}
-                                </ul>
-                                {% else %}
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{ path('app_login') }}">Se Connecter</a></li>
-                                </ul>
-                                {% endif %}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav> #}
-
         <div class="header">
             <div class="nav-bar">
                 <div class="brand">
