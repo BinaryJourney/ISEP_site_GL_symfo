@@ -7,20 +7,32 @@
 
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column">
+    <div class="w-100 h-100 d-flex flex-column bg-white" style="min-height: 100vh">
 
         <h3 class="mx-auto my-3">Fil de discussion avec {{ other_user.name ~ ' ' ~ other_user.surname }}</h3>
 
-        {% for message in messages %}
-            <div class="container m-auto w-75 p-3">
-                <div>{{ message.content }}</div>
-                <div>{{ message.keySender.name ~ ' ' ~ message.keySender.surname }}</div>
-                <div class="message-timestamp">{{ message.timestamp|date("d/m/Y H:i") }}</div>
-            </div>
-        {% endfor %}
+        <div class="w-75 mx-auto">
+            {% for message in messages %}
+                <div class="mb-3 {{ message.keySender.name == user.app. ? 'active' }}" style="max-width: 320px;">
+                    <div class="py-1 px-3 bg-light" style="border-radius: 0.5rem">{{ message.content }}</div>
+                    <div class="row" style="font-size: 0.65rem; color: gray;">
+                        <div class="ms-1 message-timestamp" style="width: fit-content">{{ message.timestamp|date("d/m/Y H:i") }}</div>
+                        <div class="ms-auto me-2" style="width: fit-content">{{ message.keySender.name ~ ' ' ~ message.keySender.surname }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-        {{ form_start(form) }}
-        {{ form_end(form) }}
+        <div class="w-75 mx-auto">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.content, 'Message') }}
+                {{ form_widget(form.content) }}
+                {{ form_help(form.content) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
 
     </div>
 
