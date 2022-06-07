@@ -5,9 +5,14 @@
     <script type="text/javascript" src="{{ asset('js/update_house_booking.js') }}"></script>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column bg-white" style="min-height: 100vh">
+    <div class="mx-auto mt-5 h-100 d-flex flex-column bg-white" style="border-radius: 0.5rem; width: 90%">
 
         {% if user.keyBookingAsBooker.count != 0 %}
             <h3 class="mx-auto my-3">Liste de mes reservations</h3>
@@ -15,33 +20,50 @@
             <h3 class="mx-auto my-3">Aucune réservation prise</h3>
         {% endif %}
 
-        {% for booking in user.keyBookingAsBooker|sort((a, b) => a.id <=> b.id) %}
-            <div class="container m-auto w-75 p-3">
-                <div class="row">
-                    <a class="col" style="font-weight: bold"
-                       href="{{ path('app_house_detailed_view', {'id': booking.keyHouse.id}) }}">{{ booking.keyHouse.title }}</a>
-                    <div class="col">{{ booking.keyHouse.description }}</div>
-                    <div class="col">{{ booking.keyHouse.dateBegin | date('d-m-Y') }}</div>
-                    <div class="col">{{ booking.keyHouse.dateEnd | date('d-m-Y') }}</div>
-                    <div class="col">{{ booking.keyHouse.keyTypeAccommodationCapacity.capacity }}</div>
-                    <div class="col">{{ booking.keyHouse.keyListeVilleFrance.name ~ ' (' ~ booking.keyHouse.keyListeVilleFrance.department ~ ')' }} </div>
-                    <img class="col" src="{{ asset('uploads/images/' ~ booking.keyHouse.imageFilename) }}">
-                    <a class="btn btn-primary col"
-                       href="{{ path('app_messages', {'id': booking.keyHouse.keyUser.id}) }}">Envoyer un message au
-                        propriétaire</a>
-                </div>
-                <div class="row ms-3">
-                    <div class="col">Reservation :</div>
-                    <div class="col">{{ booking.dateBegin | date('d-m-Y') }}</div>
-                    <div class="col">{{ booking.dateEnd | date('d-m-Y') }}</div>
-                    <div class="col">{{ booking.status.status }}</div>
-                    {% if booking.status.status == 'ACCEPTE' or booking.status.status == 'EN ATTENTE' %}
-                        <a id="accept-{{ booking.id }}" class="btn btn-primary cancel-booking col">Annuler</a>
-                    {% endif %}
-                </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-image">
+                        <tbody>
+                        {% for booking in user.keyBookingAsBooker|sort((a, b) => a.id <=> b.id) %}
+                            <tr>
+                                <th scope="row">#</th>
+                                <td class="w-25">
+                                    <img src="{{ asset('uploads/images/' ~ booking.keyHouse.imageFilename) }}"
+                                         class="img-fluid img-thumbnail" alt="Sheep">
+                                </td>
+                                <td>{{ booking.keyHouse.description }}</td>
+                                <td>{{ booking.keyHouse.dateBegin | date('d-m-Y') }}</td>
+                                <td>{{ booking.keyHouse.dateEnd | date('d-m-Y') }}</td>
+                                <td>{{ booking.keyHouse.keyTypeAccommodationCapacity.capacity }}</td>
+                                <td>{{ booking.keyHouse.keyListeVilleFrance.name ~ ' (' ~ booking.keyHouse.keyListeVilleFrance.department ~ ')' }}</td>
+                                <td><a class="btn btn-primary vermeil col"
+                                       href="{{ path('app_messages', {'id': booking.keyHouse.keyUser.id}) }}">Envoyer un
+                                        message au
+                                        propriétaire</a>
+                                </td>
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <td></td>
+                                <td>{{ booking.dateBegin | date('d-m-Y') }}</td>
+                                <td>{{ booking.dateEnd | date('d-m-Y') }}</td>
+                                <td>{{ booking.status.status }}</td>
+                                <td></td>
+                                {% if booking.status.status == 'ACCEPTE' or booking.status.status == 'EN ATTENTE' %}
+                                    <td><a id="accept-{{ booking.id }}" class="btn btn-outline-danger cancel-booking col">Annuler</a>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        {% endfor %}
+        </div>
 
     </div>
 

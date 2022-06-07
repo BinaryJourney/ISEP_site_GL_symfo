@@ -7,7 +7,7 @@
 
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column bg-white" style="min-height: 100vh">
+    <div class="mx-auto mt-5 h-100 d-flex flex-column bg-white" style="border-radius: 0.5rem; width: 90%">
 
         {% if threads|length != 0 %}
             <h3 class="mx-auto my-3">Liste de mes discussions</h3>
@@ -15,15 +15,23 @@
             <h3 class="mx-auto my-3">Aucune discussion</h3>
         {% endif %}
 
-        <div class="container m-auto w-75 p-3">
-            {% for thread in threads %}
-            <div class="row mb-2">
-                <div class="col">{{ thread['other_user'].name ~ ' ' ~ thread['other_user'].surname }}</div>
-                <div class="col">{{ thread['timestamp']|date('d/m/Y H:i') }}</div>
-                <div class="col">{{ thread['content']|length > 25 ? thread['content']|slice(0, 25) ~ '...' : thread['content'] }}</div>
-                <a class="btn btn-primary col" href="{{ path('app_messages', {'id': thread['other_user'].id}) }}">Continuer la discussion</a>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-image">
+                        <tbody>
+                        {% for thread in threads %}
+                            <tr>
+                                <th scope="row">#</th>
+                                <td>{{ thread['other_user'].name ~ ' ' ~ thread['other_user'].surname }}</td>
+                                <td>{{ thread['timestamp']|date('d/m/Y H:i') }}</td>
+                                <td>{{ thread['content']|length > 25 ? thread['content']|slice(0, 25) ~ '...' : thread['content'] }}</td>
+                                <td><a class="btn btn-primary vermeil col" href="{{ path('app_messages', {'id': thread['other_user'].id}) }}">Continuer la discussion</a></td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            {% endfor %}
         </div>
 
     </div>

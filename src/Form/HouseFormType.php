@@ -46,7 +46,7 @@ class HouseFormType extends AbstractType
                     ])
                 ],
             ])
-            ->add('Poster', SubmitType::class)
+            ->add('Poster', SubmitType::class, array('attr' => array('class' => 'vermeil')))
         ;
     }
 

@@ -7,15 +7,18 @@
 
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column bg-white" style="min-height: 100vh">
+    <div class="mx-auto mt-4 w-75 h-100 d-flex flex-column bg-white" style="border-radius: 0.5rem">
 
         <h3 class="mx-auto my-3">Fil de discussion avec {{ other_user.name ~ ' ' ~ other_user.surname }}</h3>
 
-        <div class="w-75 mx-auto">
+        <div class="w-75 mt-2 mx-auto">
             {% for message in messages %}
                 <div class="mb-3 {{ message.keySender.id == app.user.id ? 'ms-auto' }}"
                      style="max-width: 320px;">
-                    <div class="py-1 px-3 bg-light" style="border-radius: 0.5rem">{{ message.content }}</div>
+                    <div class="py-1 px-3 {{ message.keySender.id == app.user.id ? 'bg-primary' : 'bg-light' }}"
+                         style="border-radius: 0.5rem; {{ message.keySender.id == app.user.id ? 'color: white' }}">
+                        {{ message.content }}
+                    </div>
                     <div class="row" style="font-size: 0.65rem; color: gray;">
                         <div class="ms-1 message-timestamp" style="width: fit-content">{{ message.timestamp|date("d/m/Y H:i") }}</div>
                         <div class="ms-auto me-2" style="width: fit-content">{{ message.keySender.name ~ ' ' ~ message.keySender.surname }}</div>
@@ -24,7 +27,7 @@
             {% endfor %}
         </div>
 
-        <div class="w-75 mx-auto">
+        <div class="w-75 mx-auto mb-2">
             {{ form_start(form) }}
             <div class="mb-3">
                 {{ form_label(form.content, 'Message') }}

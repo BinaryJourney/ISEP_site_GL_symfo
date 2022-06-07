@@ -14,8 +14,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="w-100 h-100 d-flex flex-column bg-white">
-        <h3 class="mt-4 ms-4">Logement à proposer</h3>
+    <div class="mx-auto mt-4 w-50 h-100 d-flex flex-column bg-white" style="border-radius: 0.5rem">
+        <h3 class="mt-4 mx-auto">Logement à proposer</h3>
         <div class="m-auto p-5 w-75">
             {{ form_start(form) }}
 
@@ -62,9 +62,7 @@
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.image_filename, 'Image (1 seule)') }}
-                {{ form_widget(form.image_filename) }}
-                {{ form_help(form.image_filename) }}
+                {{ form_row(form.image_filename, { label: 'Image (1 seule)'}) }}
             </div>
 
             {{ form_end(form) }}

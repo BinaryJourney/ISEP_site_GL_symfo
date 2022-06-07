@@ -4,19 +4,33 @@
 
 {% block body %}
 
-    <div class="w-100 h-100 d-flex flex-column">
-        <h1>Editer Mon Profile</h1>
+    <div class="mx-auto mt-4 w-50 d-flex flex-column bg-white" style="border-radius: 0.5rem">
+        <h1 class="mx-auto mt-4">Editer Mon Profile</h1>
 
         <div class="m-auto p-5 w-75">
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.plainPassword, {
-                label: 'Password'
+                label: 'Mot de passe'
             }) }}
-            {{ form_row(registrationForm.name) }}
-            {{ form_row(registrationForm.surname) }}
-            {{ form_row(registrationForm.birthdate) }}
-            {{ form_row(registrationForm.phoneNumber) }}
+            {{ form_row(registrationForm.name, {
+                label: 'Nom'
+            }) }}
+            {{ form_row(registrationForm.surname, {
+                label: 'Prénom'
+            }) }}
+            {{ form_row(registrationForm.birthdate, {
+                label: 'Date de naissance'
+            }) }}
+            {{ form_row(registrationForm.phoneNumber, {
+                label: 'Numéro de téléphone'
+            }) }}
+            {{ form_row(registrationForm.key_type_sex, {
+                label: 'Sexe'
+            }) }}
+            {{ form_row(registrationForm.Inscription, {
+                label: 'Modifier mon profil'
+            }) }}
 
             {{ form_end(registrationForm) }}
         </div>

@@ -43,7 +43,7 @@ class ProfileUpdateFormType extends AbstractType
                 'years' => range(date('Y'), date('Y')-100),
                 ))
             ->add('phoneNumber')
-            ->add("Inscription", SubmitType::class)
+            ->add("Inscription", SubmitType::class, array('attr' => array('class' => 'vermeil')))
         ;
     }
 

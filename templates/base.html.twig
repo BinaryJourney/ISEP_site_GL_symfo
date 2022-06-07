@@ -102,7 +102,7 @@
                             <li><a href="{{ path('app_profile_discussions') }}">Messagerie</a></li>
                             <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('easyadmin') }}">ADMIN</a></li>
+                                <li><a href="{{ path('easyadmin') }}" target="_blank">ADMIN</a></li>
                             {% endif %}
                             {% else %}
                                 <li><a href="{{ path('app_login') }}">Se Connecter</a></li>

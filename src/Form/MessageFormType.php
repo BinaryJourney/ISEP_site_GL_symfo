@@ -14,7 +14,7 @@ class MessageFormType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add("Envoyer", SubmitType::class)
+            ->add("Envoyer", SubmitType::class, array('attr' => array('class' => 'vermeil')))
         ;
     }
 

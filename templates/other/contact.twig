@@ -2,15 +2,27 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href="{{ asset('css/contact.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
-    <div class="card w-50 mx-auto mt-5">
-        <div class="card-body">
-            <h5 class="card-title">Contactez-nous</h5>
-            <p class="card-text">trouvhebergement@gmail.com</p>
-        </div>
+    <div class="container">
+        <form action="" method="post">
+            <h1>Contactez-nous</h1>
+
+            <label for="name">Prénom :</label>
+            <input type="name" placeholder="Prénom">
+            <label for="surname">Nom :</label>
+            <input type="surname" placeholder="Nom">
+            <label for="email">Adresse email :</label>
+            <input type="email" placeholder="Email">
+            <label for="subject">Objet</label>
+            <textarea id="subject" name="subject" placeholder="Ecrivez votre message"></textarea>
+
+            <input type="submit" value="Envoyer">
+
+        </form>
     </div>
 
 {% endblock %}
