@@ -1,0 +1,2 @@
+INSERT INTO public."user" (id, key_type_sex_id, email, roles, password, name, surname, phone_number, birthdate) VALUES (11, 1, 'arthur@gmail.com', '[]', '$2y$13$Z8bogJ4luDXaKBN7qYbIfe/husR9clN4keVUL4WmNsxKD67ST0wuK', 'Devigny', 'Arthur', '0000000000', '2000-01-01');
+INSERT INTO public."user" (id, key_type_sex_id, email, roles, password, name, surname, phone_number, birthdate) VALUES (10, 1, 'max@gmail.com', '["ROLE_ADMIN"]', '$2y$13$FOSC7LUd1GJnswZHmJMgley74Pp0BzoR3a7sW494ukWXsN/XrmpKm', 'Devigny', 'Maxime', '0000000000', '2000-01-01');

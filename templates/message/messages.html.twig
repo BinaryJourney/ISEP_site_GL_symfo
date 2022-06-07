@@ -13,7 +13,8 @@
 
         <div class="w-75 mx-auto">
             {% for message in messages %}
-                <div class="mb-3 {{ message.keySender.name == user.app. ? 'active' }}" style="max-width: 320px;">
+                <div class="mb-3 {{ message.keySender.id == app.user.id ? 'ms-auto' }}"
+                     style="max-width: 320px;">
                     <div class="py-1 px-3 bg-light" style="border-radius: 0.5rem">{{ message.content }}</div>
                     <div class="row" style="font-size: 0.65rem; color: gray;">
                         <div class="ms-1 message-timestamp" style="width: fit-content">{{ message.timestamp|date("d/m/Y H:i") }}</div>
